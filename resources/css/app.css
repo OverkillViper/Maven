@@ -1,0 +1,90 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap'); */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form-input {
+    border: 0;
+    padding: 7px 0;
+    border-bottom: 1px solid transparent;
+    width: 100%;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+}
+
+.form-input ~ .focus-border{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #4caf50;
+    transition: 0.4s;
+}
+
+.form-input:focus ~ .focus-border{
+    width: 100%;
+    transition: 0.4s;
+    left: 0;
+}
+
+@layer base {
+    @font-face {
+        font-family: 'CriqueGrotesk Light';
+        src: url('CriqueGrotesk-Thin.ttf') format('truetype');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'CriqueGrotesk Regular';
+        src: url('CriqueGrotesk-Light.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'CriqueGrotesk Medium';
+        src: url('CriqueGrotesk.ttf') format('truetype');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'CriqueGrotesk SemiBold';
+        src: url('CriqueGrotesk-Medium.ttf') format('truetype');
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'CriqueGrotesk Bold';
+        src: url('CriqueGrotesk-Bold.ttf') format('truetype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+}
+
+body {
+    @apply font-medium;
+}
+
+.p-dialog-title {
+    font-weight: 700;
+}
+
+.p-select-label {
+    padding: 0.35rem 1rem !important;
+    display: flex;
+    align-items: center;
+}
+
+.p-select-option-selected {
+    color: white !important;
+}
