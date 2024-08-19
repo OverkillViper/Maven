@@ -30,7 +30,7 @@ const getChartOption = (leave) => {
                 display: false,
                 position: 'bottom',
             },
-        }
+        },
     }
 }
 </script>

@@ -291,12 +291,53 @@ class EmployeeController extends Controller
 
         $user = Auth::user();
 
-        $attendances = Attendance::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->get();
+        $startDate = null;
+        $endDate = null;
+
+        $totalDays = 0;
+        $presentDays = 0;
+        $absentDays = 0;
+
+        if($request->dates) {
+            $startDate = Carbon::parse($request->dates[0])->addDay();
+            $endDate   = Carbon::parse($request->dates[1])->addDay();
+
+            $totalDays = $request->dates[1] ? $startDate->diffInDays($endDate) + 1 : 0;
+        }
+
+        $attendances = [];
+
+        if($request->dates[0] != null && $request->dates[1] != null) {
+            for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+                $attendance = Attendance::whereDate('in_time', $date->format('Y-m-d'))
+                                        ->where('user_id', $user->id)
+                                        ->first();
+        
+                if ($attendance) {
+                    $attendances[] = [
+                        'date' => $date->format('Y-m-d'),
+                        'in_time' => $attendance->in_time,
+                        'out_time' => $attendance->out_time ?? 'NC',
+                    ];
+
+                    $presentDays++;
+                } else {
+                    $attendances[] = [
+                        'date' => $date->format('Y-m-d'),
+                        'in_time' => 'N/A',
+                        'out_time' => 'N/A',
+                    ];
+                }
+            }
+        }
 
         $context = [
             'attendances' => $attendances,
+            'totalDays'   => $totalDays,
+            'presentDays' => $presentDays,
+            'absentDays'  => $totalDays - $presentDays,
         ];
 
-        return Inertia::render('Employee/TimeSheet', $context);
+        return Inertia::render('Employee/Attendance/TimeSheet', $context);
     }
 }
