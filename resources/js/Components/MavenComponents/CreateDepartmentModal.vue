@@ -24,7 +24,7 @@ const createDepartment = () => {
 
     departmentForm.post(route('admin.department.create'), {
         onFinish: () => {
-            departmentForm.reset();
+            departmentForm.name = '';
             visible.value = false;
         },
     });

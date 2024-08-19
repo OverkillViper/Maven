@@ -10,9 +10,7 @@ class Breadcrumb extends Model
     use HasFactory;
 
     protected $fillable = [
-        'parent_id',
-        'name',
-        'href',
+        'parent_id', 'name', 'icon', 'for_admin', 'href', 'level'
     ];
 
     public function parent()

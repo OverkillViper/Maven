@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('parent_id')->nullable()->constrained('breadcrumbs')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
+            $table->string('icon');
+            $table->boolean('for_admin');
             $table->string('href');
+            $table->integer('level')->default(0);
             $table->timestamps();
         });
     }

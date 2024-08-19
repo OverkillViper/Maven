@@ -7,5 +7,4 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
     <AdminLayout pageTitle="Dashboard">
 
     </AdminLayout>
-    
 </template>

@@ -26,7 +26,7 @@ return new class extends Migration
 
             // Information
             $table->date('date_of_birth')->nullable();
-            $table->date('marital_status')->nullable();
+            $table->string('marital_status')->nullable();
             $table->enum('gender',      ['Male', 'Female', 'Other'])->nullable();
             $table->enum('title',       ['Mr.', 'Ms.', 'Mrs.'])->nullable();
             $table->string('blood_group')->nullable();

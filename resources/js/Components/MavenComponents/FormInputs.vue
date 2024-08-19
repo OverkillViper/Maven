@@ -4,10 +4,12 @@ import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
+import InputNumber from 'primevue/inputnumber';
+
 
 const model = defineModel({
-    type: String,
-    required: true,
+    type: [Number, String],
+    required: false,
 });
 
 const props = defineProps({
@@ -17,25 +19,15 @@ const props = defineProps({
     type        : { type: String  },
     disabled    : { type: Boolean },
     label       : { type: String  },
+    prefixLabel : { type: String  },
 });
 
 // const input             = ref(null);
 const isPasswordVisible = ref(props.type === 'text');
 
-const inputType = computed(() => (isPasswordVisible.value ? 'text' : 'password'));
-const iconName = computed(() => (isPasswordVisible.value ? 'visibility_off' : 'visibility'));
-
 const togglePassword = () => {
     isPasswordVisible.value = !isPasswordVisible.value;
 };
-
-// onMounted(() => {
-//     if (input.value.hasAttribute('autofocus')) {
-//         input.value.focus();
-//     }
-// });
-
-// defineExpose({ focus: () => input.value.focus() });
 
 </script>
 
@@ -47,10 +39,12 @@ const togglePassword = () => {
         </div>
         <InputGroup>
             <InputGroupAddon v-if="icon">
-                <span class="material-symbols-outlined">{{ icon }}</span>
+                <span class="material-symbols-outlined text-sm">{{ icon }}</span>
             </InputGroupAddon>
             <Password  v-model="model" :placeholder="placeholder" variant="filled" size="small" v-if="type == 'password'" :feedback="false" toggleMask />
-            <InputText v-model="model" :placeholder="placeholder" variant="filled" size="small" :type="type" v-else/>
+            <InputNumber v-model="model" :placeholder="placeholder" locale="en-IN" fluid v-else-if="type == 'number'" size="small" variant="filled"/>
+            <InputText :disabled="disabled" v-model="model" :placeholder="placeholder" variant="filled" size="small" :type="type" v-else/>
+            <InputGroupAddon v-if="prefixLabel" class="text-sm font-semibold">{{ prefixLabel }}</InputGroupAddon>
         </InputGroup>
     </div>
     

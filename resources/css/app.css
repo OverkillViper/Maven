@@ -80,11 +80,31 @@ body {
 }
 
 .p-select-label {
-    padding: 0.35rem 1rem !important;
+    padding: 0.45rem 1rem !important;
     display: flex;
     align-items: center;
 }
 
 .p-select-option-selected {
+    color: white !important;
+}
+
+.p-datepicker .p-inputtext {
+    @apply text-sm;
+}
+
+.p-inputnumber .p-inputtext {
+    @apply text-sm text-center;
+}
+
+.material-symbols-outlined {
+    @apply select-none;
+}
+
+.p-togglebutton-label {
+    @apply font-medium text-sm;
+}
+
+.p-datepicker-day-selected-range {
     color: white !important;
 }

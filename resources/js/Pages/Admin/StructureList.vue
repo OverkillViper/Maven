@@ -1,8 +1,9 @@
 <script setup>
 import { Link, useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
-import FormInputs from '@/Components/MavenComponents/FormInputs.vue';
 import Button from '@/Components/MavenComponents/Button.vue';
+import CreateStructureModal from '@/Components/MavenComponents/CreateStructureModal.vue';
+import DeleteStructureModal from '@/Components/MavenComponents/DeleteStructureModal.vue';
 
 const pageForm = useForm({
     name:   '',
@@ -72,7 +73,7 @@ initializeVisibility();
 <template>
     <ul class="tree">
         <li v-for="breadcrumb in props.breadcrumbs" :key="breadcrumb.id" class="mt-2">
-            <div class="flex items-center h-10">
+            <div class="flex items-center h-10 ">
                 <span class="material-symbols-outlined select-none cursor-default bg-primary rounded-sm text-white text-sm w-5 aspect-square flex justify-center items-center"
                     v-if="breadcrumb.children.length" @click="toggleChildren(breadcrumb.id)"
                 >
@@ -82,21 +83,12 @@ initializeVisibility();
                     <div class="text-sm font-semibold">{{ breadcrumb.name }}</div>
                     <div class="text-xs font-medium">{{ breadcrumb.href }}</div>
                 </div>
-                <div>
-                    <Link :href="route('admin.structure.delete', breadcrumb.id)" class="ms-4 w-8 aspect-square border flex items-center justify-center rounded-md border-primary hover:bg-gray-200 transition">
-                        <span class="material-symbols-outlined text-sm">delete</span>
-                    </Link>
+                <div class="me-2">
+                    <DeleteStructureModal btnIcon="delete" :structure="breadcrumb.id"/>
                 </div>
                 <div>
-                    <button class="ms-4 w-8 aspect-square border flex items-center justify-center rounded-md border-primary hover:bg-gray-200 transition" @click="toggleButton(breadcrumb.id)">
-                        <span class="material-symbols-outlined text-sm">{{ buttonIcon[breadcrumb.id] == null ? 'add' : buttonIcon[breadcrumb.id] }}</span>
-                    </button>
+                    <CreateStructureModal btnIcon="add" :parent="breadcrumb.id"/>
                 </div>
-                <form @submit.prevent="addPage(breadcrumb.id)" class="flex" v-if="showPageForm[breadcrumb.id]">
-                    <FormInputs v-model="pageForm.name" type="text" autocomplete="off" placeholder="Page name" class="ms-4"/>
-                    <FormInputs v-model="pageForm.href" type="text" autocomplete="off" placeholder="Page href" class="ms-4"/>
-                    <Button prefixIcon="add" label="Add" class="ms-4" type="submit"/>
-                </form>
             </div>
             
             <div v-if="childrenVisible[breadcrumb.id]">

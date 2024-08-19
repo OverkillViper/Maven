@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Department;
 use App\Models\Address;
 use App\Models\Designation;
-
+use Carbon\Carbon;
 class Employee extends Model
 {
     use HasFactory;
@@ -68,5 +68,26 @@ class Employee extends Model
     public function permanentAddress()
     {
         return $this->hasOne(Address::class)->where('address_type', 'Permanent');
+    }
+
+    public function experience()
+    {
+        if ($this->joined_at) {
+            $joinedAt = Carbon::parse($this->joined_at);
+            $now = Carbon::now();
+
+            $years = (int) $joinedAt->diffInYears($now);
+            $months = $joinedAt->diffInMonths($now) % 12;
+
+            return [
+                'years' => $years,
+                'months' => $months,
+            ];
+        }
+
+        return [
+            'years' => 0,
+            'months' => 0,
+        ];
     }
 }

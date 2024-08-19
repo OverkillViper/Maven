@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('designations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('department_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');
             $table->integer('position');
             $table->timestamps();

@@ -24,7 +24,7 @@ defineProps({
             <CreateDepartmentModal btnLabel="Create a department" btnIcon="add"/>
         </div>
 
-        <div class="flex justify-end gap-x-4">
+        <div class="flex justify-end gap-x-4" v-if="departments.length">
             <Button label="Expand All" prefixIcon="add" compact @click="expanded = true"/>
             <Button label="Collapse All" prefixIcon="remove" compact @click="expanded = false"/>
         </div>

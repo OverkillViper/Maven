@@ -39,7 +39,7 @@ const submit = () => {
             <div class="text-xl font-bold mt-6">Sign up</div>
 
             <form @submit.prevent="submit" class="mt-6 flex flex-col gap-y-3">
-                <div class="flex">
+                <div class="flex gap-x-3">
                     <FormInputs type="text"     placeholder="First name" icon="person" v-model="form.first_name"/>
                     <FormInputs type="text"     placeholder="Last name"                v-model="form.last_name"/>
                 </div>

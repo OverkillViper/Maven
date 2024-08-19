@@ -28,7 +28,7 @@ const lowestPosition = Math.min(...props.designations.map(d => d.position));
         </div>
 
         <div class="p-5">
-            <div class="flex justify-end">
+            <div class="flex justify-end" v-if="designations.length">
                 <CreateDesignationModal btnLabel="Create designation" btnIcon="add"/>
             </div>
             <div class="w-3/5 mx-auto">

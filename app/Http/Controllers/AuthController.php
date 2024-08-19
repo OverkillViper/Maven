@@ -69,6 +69,7 @@ class AuthController extends Controller
 
         $employee = Employee::create([
             'user_id'    => $user->id,
+            'joined_at'  => $user->created_at,
         ]);
 
         event(new Registered($user));

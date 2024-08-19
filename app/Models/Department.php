@@ -15,7 +15,7 @@ class Department extends Model
     ];
 
     public function parent() {
-        return $this->belongsTo(Department::class, 'parent_id');
+        return $this->belongsTo(Department::class, 'parent_id')->with('parent');
     }
 
     public function children() {
@@ -24,5 +24,18 @@ class Department extends Model
 
     public function hasChild() {
         return $this->children()->count() > 0;
+    }
+
+    public function ancestors()
+    {
+        $ancestors = collect([]);
+        $department = $this;
+
+        while ($department && $department->parent) {
+            $ancestors->push($department->parent);
+            $department = $department->parent;
+        }
+
+        return $ancestors;
     }
 }

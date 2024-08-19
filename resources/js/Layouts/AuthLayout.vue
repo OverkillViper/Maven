@@ -1,5 +1,4 @@
 <script setup>
-import { FwbToast } from 'flowbite-vue'
 import { computed, watch } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { useToast } from 'primevue/usetoast';

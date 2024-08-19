@@ -19,7 +19,7 @@ const props = defineProps({
 
     <Dialog v-model:visible="visible" modal header="Delete Department" :style="{ width: '35rem' }" class="dialog">
         <div class="font-semibold">
-            Are you sure you want to delete this department?
+            Are you sure you want to delete this page?
         </div>
         <div>
             Note: Deleting this department will also delete all its employees and its sub-department.

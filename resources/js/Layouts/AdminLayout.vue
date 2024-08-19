@@ -1,28 +1,48 @@
 <script setup>
 import Sidebar from '@/Pages/Admin/Sidebar.vue';
-import { FwbToast } from 'flowbite-vue'
-import { computed } from 'vue';
+import { watch } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { Head } from '@inertiajs/vue3';
 import Header from '@/Pages/Admin/Header.vue';
+import { useToast } from 'primevue/usetoast';
 
 defineProps({
     pageTitle : String
 })
 
+const toast = useToast();
 const $page = usePage();
-const hasError = computed(() => Object.keys($page.props.errors).length > 0);
+
+watch(() => $page.props.flash, flash => {
+    if(flash.message) {
+        toast.add({ severity: flash.status, summary: flash.status, detail: flash.message, life: 3000 });
+    }
+});
+
+watch(() => $page.props.errors, errors => {
+    if (errors) {
+        Object.keys(errors).forEach(key => {
+            toast.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: errors[key],
+                life: 3000
+            });
+        });
+    }
+});
+
+const breadcrumbs = $page.props.breadcrumbs;
 
 </script>
 
 <template>
     <div class="min-h-screen bg-accent flex">
-
-        <Sidebar class="basis-1/6"/>
+        <Sidebar class="basis-1/6" :breadcrumbs="breadcrumbs"/>
         <div class="basis-5/6 p-3 ps-0">
             <div class="rounded-lg shadow-sm border bg-white w-full h-full">
                 <Head :title="pageTitle" />
-                <Header :pageTitle="pageTitle" />
+                <Header :pageTitle="pageTitle"/>
                 <hr>
                 
 
@@ -32,10 +52,6 @@ const hasError = computed(() => Object.keys($page.props.errors).length > 0);
             </div>
             
         </div>
-        <div class="absolute right-0 bottom-0 p-8" v-if="hasError">
-            <fwb-toast type="danger" class="shadow-md border border-red-400 font-medium mt-3" v-for="(error, field) in $page.props.errors" :key="field">
-                {{ error }}
-            </fwb-toast>
-        </div>
+        <Toast position="bottom-right"></Toast>
     </div>
 </template>

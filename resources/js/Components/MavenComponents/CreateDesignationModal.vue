@@ -19,7 +19,7 @@ const designationForm = useForm({
 const createDesignation = () => {
     designationForm.post(route('admin.designation.create'), {
         onFinish: () => {
-            designationForm.reset('title');
+            designationForm.title = '';
             visible.value = false;
         },
     });

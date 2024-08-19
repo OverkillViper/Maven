@@ -18,7 +18,7 @@ class LoadEmployeeMiddleware
     {
         if ($request->user()) {
             // Load the employee relationship and share it with Inertia
-            $user = $request->user()->load('employee');
+            $user = $request->user()->load('employee.department', 'employee.designation');
             Inertia::share('auth.user', function () use ($user) {
                 return $user;
             });

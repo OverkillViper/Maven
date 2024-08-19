@@ -3,7 +3,6 @@ import FormInputs from '@/Components/MavenComponents/FormInputs.vue';
 import Button from '@/Components/MavenComponents/Button.vue';
 import { useForm, usePage, Link } from '@inertiajs/vue3';
 import ChangeProfilePictureModal from '@/Pages/Admin/Profile/ChangeProfilePictureModal.vue';
-import { ref } from 'vue';
 
 const $page = usePage();
 // const { auth: { user } } = $page.props.value;
@@ -18,17 +17,11 @@ const profileForm = useForm({
     'email'         : $page.props.auth.user.email,
 });
 
-const editingInformation = ref(false);
-
-const toggleInformationEditing = () => {
-    editingInformation.value = !editingInformation.value;
-}
 
 const saveProfile = () => {
-    profileForm.post(route('admin.profile.general.update'), {
+    profileForm.post(route('profile.general.update'), {
         onFinish: () => {
             profileForm.reset();
-            toggleInformationEditing();
         },
     });
 };
@@ -36,42 +29,33 @@ const saveProfile = () => {
 </script>
 
 <template>
-    <form class="flex w-2/3 mx-auto" @submit.prevent="saveProfile">
+    <div class="flex w-2/3 mx-auto" >
         <div class="w-80 flex flex-col items-center 100 p-3">
-            <img :src="$page.props.auth.user.employee.avatar ? getImageUrl($page.props.auth.user.employee.avatar) : '/images/user.webp'" alt="" srcset="" class="w-40 rounded-full shadow-sm border">
+            <img :src="$page.props.auth.user.employee.avatar ? getImageUrl($page.props.auth.user.employee.avatar) : '/images/user.webp'" alt="" srcset="" class="w-44 rounded-lg shadow-sm border">
             <div class="p-4">
                 <ChangeProfilePictureModal btnLabel="Change avatar" btnIcon="image"/>
             </div>
         </div>
-        <div class="w-full ms-8 flex flex-col justify-center border p-6 rounded-xl">
-            <div class="flex justify-end gap-x-4">
-                <Button v-if="editingInformation" label="Cancel" prefixIcon="close" @click="toggleInformationEditing"/>
-                <Button v-else label="Edit" prefixIcon="edit" @click="toggleInformationEditing"/>
-                <Button v-if="editingInformation" label="Save" prefixIcon="save" type="submit"/>
+        <form @submit.prevent="saveProfile" class="w-full">
+            <div class="w-full flex flex-col justify-center border p-6 rounded-xl">
+                <div class="text-sm font-medium text-gray-500 mt-4 mb-1">
+                    First name
+                </div>
+                <FormInputs type="text" placeholder="First name" v-model="profileForm.first_name"/>
+                <div class="text-sm font-medium text-gray-500 mt-4 mb-1">
+                    Last name
+                </div>
+                <FormInputs type="text" placeholder="Last name" v-model="profileForm.last_name"/>
+                <div class="text-sm font-medium text-gray-500 mt-4 mb-1">
+                    Email
+                </div>
+                <FormInputs type="text" placeholder="Email" v-model="profileForm.email" disabled/>
+                <div class="flex justify-end gap-x-4 mt-4">
+                    <Button label="Save" prefixIcon="save" type="submit"/>
+                </div>
             </div>
-            <div class="text-sm font-medium text-gray-500 mt-4 mb-1">
-                First name
-            </div>
-            <FormInputs v-if="editingInformation" type="text" placeholder="First name" v-model="profileForm.first_name"/>
-            <div v-else class="font-semibold">
-                {{ $page.props.auth.user.first_name }}
-            </div>
-            <div class="text-sm font-medium text-gray-500 mt-4 mb-1">
-                Last name
-            </div>
-            <FormInputs v-if="editingInformation" type="text" placeholder="Last name" v-model="profileForm.last_name"/>
-            <div v-else class="font-semibold">
-                {{ $page.props.auth.user.last_name }}
-            </div>
-            <div class="text-sm font-medium text-gray-500 mt-4 mb-1">
-                Email
-            </div>
-            <FormInputs v-if="editingInformation" type="text" placeholder="Email" v-model="profileForm.email" disabled/>
-            <div v-else class="font-semibold">
-                {{ $page.props.auth.user.email }}
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
     
     <div class="flex items-center justify-between border p-6 rounded-xl w-2/3 mx-auto mt-6">
         <div>

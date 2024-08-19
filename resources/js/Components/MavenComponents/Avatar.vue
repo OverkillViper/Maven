@@ -4,6 +4,7 @@ import { Link } from '@inertiajs/vue3';
 
 defineProps({
     img : String,
+    href : String
 });
 
 const getImageUrl = (imagePath) => {
@@ -13,7 +14,7 @@ const getImageUrl = (imagePath) => {
 </script>
 
 <template>
-    <Link :href="route('admin.profile')" class="border rounded-full shadow-sm">
+    <Link :href="href ? route(href) : '#'" class="border rounded-full shadow-sm">
         <fwb-avatar :img="getImageUrl(img)" rounded v-if="img"/>
         <fwb-avatar rounded v-else/>
     </Link>

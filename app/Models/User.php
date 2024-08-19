@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Employee;
+use App\Models\Attendance;
+use App\Models\LunchBooking;
+use App\Models\Leave;
 
 class User extends Authenticatable
 {
@@ -56,6 +59,21 @@ class User extends Authenticatable
     public function getAvatar()
     {
         return $this->employee ? $this->employee->avatar : null;
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function lunchBookings()
+    {
+        return $this->hasMany(LunchBooking::class);
+    }
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
     }
 
 }
